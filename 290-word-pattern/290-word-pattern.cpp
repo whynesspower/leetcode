@@ -6,8 +6,8 @@ public:
     bool wordPattern(string pattern, string s) {
         
         vector<string> words;
-        unordered_map<char, string>mp;
-        unordered_set<string>st;
+        map<char, string>mp;
+        set<string>st;
         
         string item;
         stringstream iss(s);
