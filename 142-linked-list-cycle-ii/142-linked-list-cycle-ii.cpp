@@ -17,11 +17,13 @@ public:
             if(slow==fast) break;
         }
         if(!(fast and fast->next)) return NULL;
-        while(head!=slow){
-            head=head->next;
-            slow=slow->next;
+        slow = head;
+        while (slow != fast) {
+            slow = slow->next;
+            fast = fast->next;
         }
-        return head;
+        
+        return slow;
         
         
     }
