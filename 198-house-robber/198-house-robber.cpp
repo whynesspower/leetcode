@@ -1,8 +1,10 @@
 class Solution {
 public:
-    unordered_map<int,int>dp;
     
-    int fun(vector<int>&nums){
+    int rob(vector<int>& nums) {
+
+        unordered_map<int,int>dp;
+    
         if(nums.size()==1) return nums[0];
         dp[0]=nums[0];
         dp[1]=max(nums[0], nums[1]);
@@ -10,10 +12,5 @@ public:
             dp[i]=max(dp[i-1], dp[i-2]+nums[i]);
         }
         return dp[nums.size()-1];
-    }
-    
-    
-    int rob(vector<int>& nums) {
-        return fun(nums);    
     }
 };
