@@ -1,20 +1,10 @@
 class Solution {
 public:
     int addDigits(int num) {
-        
-        if(num/10==0) return num;
-        int temp=0;
-        
-        while(num){
-            temp+= num%10;
-            num/=10;
-            if(num==0) break;
+        if(num==0)return 0;
+        if(num%9==0) return 9;
+        else{
+            return num%9;
         }
-        
-        return addDigits(temp);
     }
 };
-
-
-
-
