@@ -70,7 +70,7 @@ Node * temp(int in[], int post[], int start, int end, int &rootIndx){
     int i= mp[post[rootIndx]];
     Node* curr= new Node(in[i]);
     rootIndx--;
-    if(start==end) return curr;
+    // if(start==end) return curr;
     curr->right=temp(in, post, i+1, end, rootIndx );
     curr->left=temp(in, post, start, i-1, rootIndx);
     return curr;
