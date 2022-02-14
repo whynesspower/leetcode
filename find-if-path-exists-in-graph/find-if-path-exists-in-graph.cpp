@@ -9,7 +9,7 @@ public:
         visited[source]=true;
         
         for(auto x:adj[source]){
-            if(visited[x]==false and x!=source ){
+            if(visited[x]==false ){
                 dfs(x, visited);
             }
         }
