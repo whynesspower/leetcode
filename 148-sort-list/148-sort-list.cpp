@@ -10,25 +10,36 @@
  */
 class Solution {
 public:
+
+    ListNode* merge(ListNode* one, ListNode* two){
+        if(!one and !two ) return nullptr;
+        if(!one) return two;
+        if(!two) return one;
+        if(one->val < two->val){
+            one->next=merge(one->next, two);
+            return one;
+        }
+        else{
+            two->next=merge(one, two->next);
+            return two;
+        }
+    }
+    
+    
     ListNode* sortList(ListNode* head) {
-        priority_queue<pair<int, ListNode*>, vector<pair<int, ListNode*>>, greater<pair<int, ListNode*>>> q;
-        ListNode* temp=head;
-        while(temp!=nullptr){
-            q.push({temp->val, temp});
-            temp=temp->next;
+        if(!head or !head->next) return head;
+        ListNode* slow=head, *fast=head->next;
+        while(fast and fast->next){
+            slow=slow->next;
+            fast=fast->next->next;
         }
         
-        ListNode*head1=new ListNode();
-        ListNode*curr=head1;
-        while(!q.empty()){
-            curr->next=q.top().second;
-            q.pop();
-            curr=curr->next;
-        }
-        curr->next=nullptr;
-        head1=head1->next;
-        return head1;
+        ListNode* second=slow->next;
+        slow->next=nullptr;
         
+        ListNode* left=sortList(head);
+        ListNode* right=sortList(second);
+        return merge(left, right);
         
     }
 };
