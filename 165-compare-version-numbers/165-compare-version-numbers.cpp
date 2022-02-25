@@ -2,8 +2,8 @@ class Solution {
 public:
     int compareVersion(string version1, string version2) {
         
-        istringstream v1(version1);
-        istringstream v2(version2);
+        stringstream v1(version1);
+        stringstream v2(version2);
         
         string num1, num2;
         
@@ -29,11 +29,9 @@ public:
             if(n1==n2)continue;
             return (n1>n2)?1:-1;
             
-        }
+        } 
         
         return 0;
-        
-        
-        
+
     }
 };
