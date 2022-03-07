@@ -8,29 +8,18 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-
-        static const auto fastIO = []() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
-    return 0;
-}();
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        if(list1==NULL) return list2;
-        if(list2==NULL) return list1;
-        if(list1->val<=list2->val){
+        if(!list1) return list2;
+        else if(!list2) return list1;
+        
+        if(list1->val <= list2->val){
             list1->next=mergeTwoLists(list1->next, list2);
             return list1;
-        }
-        else{
-            
+        }else{
             list2->next=mergeTwoLists(list1, list2->next);
             return list2;
         }
-        
-
-        
     }
 };
