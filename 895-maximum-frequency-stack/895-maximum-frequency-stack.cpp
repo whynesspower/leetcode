@@ -1,18 +1,19 @@
 class FreqStack {
 public:
+    
+    priority_queue<pair<int,pair<int,int>>>q;
     unordered_map<int,int>freq;
-    unordered_map<int, stack<int>>st;
-    int maxfreq=0;
+    int pos=0;
     
     void push(int val) {
-        maxfreq=max(maxfreq, ++freq[val]);
-        st[freq[val]].push(val);
+        q.emplace(++freq[val] ,  make_pair(++pos, val));
+        
     }
     
     int pop() {
-        int x= st[maxfreq].top();
-        st[maxfreq].pop();
-        if(st[freq[x]--].size()==0) maxfreq--;
+        int x = q.top().second.second;
+        q.pop();
+        freq[x]--;
         return x;
     }
 };
