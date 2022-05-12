@@ -1,16 +1,21 @@
 class Solution {
 public:
+    vector<vector<int>>ans;
     vector<vector<int>> permuteUnique(vector<int>& nums) {
-        vector<vector<int>>ans;
         sort(nums.begin(), nums.end());
-        do{
-            vector<int>temp;
-            for(int i=0;i<nums.size();i++){
-                temp.push_back(nums[i]);
-            }
-            ans.push_back(temp);
-        }
-        while(next_permutation(nums.begin(), nums.end())); 
+        helper(nums,0, nums.size());
         return ans;
+    }
+    void helper(vector<int>nums,int i, int j){
+        if(i==j-1){
+            ans.push_back(nums);
+            return;   
+            
+        }
+        for(int k=i;k<j;k++){
+            if(i!=k and nums[i]==nums[k])continue;
+            swap(nums[i], nums[k]);
+            helper(nums, i+1, j);
+        }
     }
 };
