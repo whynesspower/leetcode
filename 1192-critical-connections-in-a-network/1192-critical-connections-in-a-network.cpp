@@ -16,19 +16,19 @@ public:
             if(vis[x]==false)
             {
                 dfs(x,node);
-                lowlink[node]=min(lowlink[node], lowlink[x]);
+                lowlink[node]=min(lowlink[node],lowlink[x]);
                 if(id[node]<lowlink[x])
                     ans.push_back({node,x});
             }
-            else
+            else 
                 lowlink[node]=min(lowlink[node],id[x]);
         }
     }
     vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
         graph.resize(n);
         vis.resize(n,false);
-        lowlink.resize(n,-1);
-        id.resize(n,-1);
+        lowlink.resize(n,0);
+        id.resize(n,0);
         for(auto &x:connections)
         {
             graph[x[0]].push_back(x[1]);
