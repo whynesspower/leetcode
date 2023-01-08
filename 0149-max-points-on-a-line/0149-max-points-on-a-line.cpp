@@ -9,7 +9,7 @@ public:
                 int y1=p[i][1];
                 int x2=p[j][0];
                 int y2=p[j][1];
-                if(x1-x2==0) mp[90]++;
+                if(x1-x2==0) mp[INT_MAX]++;
                 else{
                     double m= (double)((double)(y2-y1)/(double)(x2-x1));
                     mp[m]++;
