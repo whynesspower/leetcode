@@ -5,7 +5,7 @@ public:
         vis[node]=true;
         vector<int>temp(26,0);
         for(auto x: adj[node]){
-            if(vis[x]==false and ans[node]==-1){
+            if(vis[x]==false){
                 vector<int>t=dfs(adj, s, x, vis);
                 for(int i=0;i<26;i++){
                     temp[i]+=t[i];
