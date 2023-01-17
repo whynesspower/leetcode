@@ -14,7 +14,7 @@ public:
                     ans+=(nums.size()-i);
                     mp[nums[l]]--;
                     pairs-=mp[nums[l]];
-                    if(mp[nums[l]]==0) mp.erase(nums[l]);
+                    // if(mp[nums[l]]==0) mp.erase(nums[l]);
                     l++;
                 }
             }
