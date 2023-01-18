@@ -1,45 +1,26 @@
-#define ll long long
 class Solution {
 public:
-    vector<unordered_map<int, ll>>dp;
-    
-    // dp[i][par] will give the maximum path sum possible if we start from
-    // node "i" and that node has a parent of "par"
-    long long dfs(vector<long long>adj[], ll src,  vector<int>& price, ll par){
-        if(dp[src].count(par)){
-            return dp[src][par];
-        }
-        
-        ll subchilmax=0;
-        for(auto it: adj[src]){
-            if(it!=par){
-                ll t=dfs(adj, it, price, src);
-                subchilmax=max(t, subchilmax);
-            }
-        }
-        dp[src][par]=subchilmax+price[src];
-        return dp[src][par];
-    }
-    
     long long maxOutput(int n, vector<vector<int>>& edges, vector<int>& price) {
-        vector<ll>adj[n];
-        dp.resize(n);
-        for(ll i=0;i<edges.size();i++){
-            ll a=edges[i][0];
-            ll b=edges[i][1];
-            adj[a].push_back(b);
-            adj[b].push_back(a);
+        vector<vector<int>> g(n);
+        for(auto& e : edges) {
+            g[e[0]].push_back(e[1]);
+            g[e[1]].push_back(e[0]);
         }
-        // dfs(i, parent) will tell the maximum sum of the path such
-        // that if we start from node "I", which has node "par" as parent,
-        // what will the maximum path sum we will have.  
-        ll ans=0;
-        for(ll i=0;i<n;i++){
-            if (size(adj[i]) == 1){
-                ans=max(ans, dfs(adj, i, price, -1ll)-price[i]);
+        long long ans = 0;
+        function<vector<long long>(int, int)> dfs = [&] (int now, int pre) ->vector<long long> {
+            vector<long long> cur_max = {price[now], 0};
+            for(auto& nei : g[now]) {
+                if(nei != pre) {
+                    auto&& sub = dfs(nei, now);
+                    ans = max(ans, cur_max[0] + sub[1]);
+                    ans = max(ans, cur_max[1] + sub[0]);
+                    cur_max[0] = max(cur_max[0], sub[0] + price[now]);
+                    cur_max[1] = max(cur_max[1], sub[1] + price[now]);
+                }
             }
-        }
-        
+            return cur_max;
+        };
+        dfs(0, -1);
         return ans;
     }
 };
