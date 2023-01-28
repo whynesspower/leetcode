@@ -1,62 +1,48 @@
-class SummaryRanges {
+class SummaryRanges 
+{
 public:
-    map<int,int>mp;
-    // we need to insert and delete a lot of things simultaneously hence we will
-    // use map, and not any other DS like 2D Matrix of anything
-    
-    SummaryRanges() {
+    vector<int> arr;
+    set<int> set_check;
+    SummaryRanges() 
+    {
         
     }
     
-    void addNum(int value) {
-        bool merge=false;
-        auto it=mp.lower_bound(value);
-        if(it!=mp.begin()){
-            auto prev= it;
-            prev--;
-            if(prev->second+1>=value){
-                merge=true;
-                prev->second=max(prev->second, value);
-            }     
+    void addNum(int value) 
+    {
+        //for stopping adding duplicate value
+        //check value doesn't present in the stream 
+        if(set_check.count(value)==0) 
+        {
+            arr.push_back(value);
+            set_check.insert(value);
+            sort(begin(arr), end(arr)); //sort array for getting intervals
         }
-        
-        if(it!=mp.end()){
-            if(it->first-1<=value){
-
-                if(merge){
-                    auto prev=it;
-                    prev--;
-                    if(prev->second >= it->first - 1) {
-                        prev->second=max(prev->second, it->second);
-                        mp.erase(it);
-                    }
-                }
-                else{
-                    merge=true;
-                    if(it->first!=value){
-                        pair<int,int>p=*it;
-                        p.first=min(value, p.first);
-                        it= mp.insert(it, p);
-                        it++;
-                        if(it!=mp.end()){
-                            mp.erase(it);
-                        }
-                    }
-                    
-                }
+    }
+    
+    vector<vector<int>> getIntervals() 
+    {
+        vector<vector<int>> res;
+        vector<int> temp; //storing interval
+        int i, j;
+        for(i=0; i<arr.size(); i++)
+        {
+            //initially take same start and end point for the interval
+            temp.push_back(arr[i]);
+            temp.push_back(arr[i]);
+            for(j=i+1; j<arr.size(); j++) //for updating end point of the interval
+            {
+                if(arr[j]-1 == temp.back()) //if values are consecutive, we update end point
+                    temp[1] = arr[j];
+                else
+                    break;
             }
+            res.push_back(temp); //add the interval in the result
+            temp.clear(); //clear the interval
+            i=j-1; //updating index i
+
         }
-        if(!merge){
-            mp.insert(it, {value, value});
-        }
-    }
-    
-    vector<vector<int>> getIntervals() {
-        vector<vector<int>>ans;
-        for(auto &it:mp){
-            ans.push_back({it.first, it.second});
-        }
-        return ans;
+        return res;
+        
     }
 };
-
