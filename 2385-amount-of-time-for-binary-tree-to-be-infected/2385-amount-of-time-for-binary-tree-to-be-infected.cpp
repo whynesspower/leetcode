@@ -1,63 +1,35 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
 public:
-    TreeNode* target;
-    unordered_map<TreeNode*, vector<TreeNode* >>mp;
+    //res to store maximum distance from the first infected node
+    int res = 0;
+    pair<bool,int> dfs(TreeNode* root, int start){
+        if(!root) return {false,0};
+        //return type pair states whether we came across start or not and maximum distance in this call
+        pair<bool,int>p1 = dfs(root->left,start);
+        pair<bool,int>p2 = dfs(root->right,start);
+        // if we find the node then the maximum distance for now will be the maximum of 2 dfs calls and we will send the current distance as 0 to its parent(if exists)
+        if(root->val==start){
+            int temp = max(p2.second,p1.second);
+            res = max(res,temp);
+            return {true,0};
+        }
+        //if we find the start node to any of the dfs calls then the answer will be maximum of its previous value or sum of distance of start from this node and other path
+        if(p1.first){
+            int sum = p1.second+p2.second+1;
+            res = max(res,sum);
+            return {true,p1.second+1};
+        }else if(p2.first){
+            int sum = p1.second+p2.second+1;
+            res = max(res,sum);
+            return {true,p2.second+1};
+        }
+        //If we are still here, it means we have not come across the start node in this dfs call and hence will retuen maximum of 2 dfs calls
+        int sum = max(p1.second,p2.second);
+        return {false,1+sum};
+    }
     
-    unordered_map<TreeNode*, int>mp2;
-    vector<int>ans;
-    unordered_set<TreeNode*>vis;
-    void buildmap(TreeNode* node, TreeNode* prev){
-        if(node==nullptr) return;
-        if(mp.find(node)==mp.end() and prev!=nullptr){
-            mp[node].push_back(prev);
-            mp[prev].push_back(node);
-        }
-        buildmap(node->left, node);
-        buildmap(node->right, node);
-    }
-    void search(int s, TreeNode* root){
-        if(!root) return;
-        if(root->val==s){
-            target=root;
-            return;
-        }
-        if(!root) return;
-        search(s, root->left);
-        search(s, root->right);
-    }
-    
-    void dfs(TreeNode* node , int i){
-        if(node==nullptr) return;
-        vis.insert(node);
-        // if(i==k) ans.push_back(node->val);
-        // mp2 has time to burn the current node
-        
-        mp2[node]=i;
-        for(auto x: mp[node]){
-            if(vis.find(x)==vis.end()){
-                dfs(x, i+1);   
-            }
-        }
-    }
     int amountOfTime(TreeNode* root, int start) {
-        search(start, root);
-        buildmap(root, nullptr);
-        dfs(target, 0);
-        int ans=INT_MIN;
-        for(auto x:mp2){
-            ans=max(ans, x.second);
-        }
-        return ans;
+        dfs(root,start);
+        return res;
     }
 };
