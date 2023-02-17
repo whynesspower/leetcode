@@ -12,7 +12,7 @@
 class Solution {
 public:
     vector<TreeNode*> generateTrees(int n) {
-        if(n==0) return {};
+        // if(n==0) return {};
         return solve(1, n);
     }
     vector<TreeNode*>solve(int start, int end)
