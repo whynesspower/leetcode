@@ -1,7 +1,8 @@
 class Solution {
 public:
   Node* construct(vector<vector<int>>& grid) {
-    grid_ = move(grid);
+    // grid_ = move(grid);
+      grid_=grid;
     leafNodes_[0] = new Node(false, true, nullptr, nullptr, nullptr, nullptr);
     leafNodes_[1] = new Node(true,  true, nullptr, nullptr, nullptr, nullptr);
     return construct(0, 0, grid_.size());
