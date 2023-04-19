@@ -1,35 +1,52 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
-    map<pair<TreeNode*,int>,int> m;
-    int count(TreeNode* root,int dir){
-        if(!root){
-            return 0;
+    unordered_map<TreeNode*, int>mp;
+    // flag ---> true: go to right first
+    // flag ---> false: go to left first
+    int dfs2(TreeNode* root, bool flag){
+        if(mp.find(root)!=mp.end()){
+            return mp[root];
         }
-        if(m[{root,dir}]!=0){
-            return m[{root,dir}];
-        }
-        int c = 0;
-        if(dir){
-            c = 1 + count(root->right,0);
+        if(!root)return 0;
+        int a= 0;
+        if(flag){
+            flag=!flag;
+            a= dfs2(root->right, flag);
         }
         else{
-            c = 1 + count(root->left,1);
+            flag=!flag;
+            a= dfs2(root->left, flag);
         }
-        return m[{root,dir}] = c;
+        mp[root]=a+1;
+        return mp[root];
     }
-    void solve(TreeNode* root,int &ans){
-        if(!root){
-            return;
+    
+    void dfs(TreeNode* root){
+        if(!root)return;
+        int a= dfs2(root->left, true);
+        int b= dfs2(root->right, false);
+        mp[root]=max(a,b);
+        
+        dfs(root->left);
+        dfs(root->right);
+    }
+    int longestZigZag(TreeNode* root) {
+        dfs(root);
+        int ans=INT_MIN;
+        for(auto x: mp){
+            ans=max(x.second, ans);
         }
-        int countRight = count(root,1);
-        int countLeft = count(root,0);
-        ans = max(ans,max(countRight,countLeft));
-        solve(root->left,ans);
-        solve(root->right,ans);
-    }
-    int longestZigZag(TreeNode* root){
-       int ans = 0;
-       solve(root,ans);
-       return ans-1;
+        return ans;
     }
 };
