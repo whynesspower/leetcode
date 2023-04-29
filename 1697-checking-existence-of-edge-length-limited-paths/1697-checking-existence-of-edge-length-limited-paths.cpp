@@ -5,10 +5,7 @@ public:
     vector<int>parent;
     vector<int>rank;
     UnionFind(int n){
-        // parent.resize(n, -1);
-        for(int i=0;i<n;i++){
-            parent.push_back(i);
-        }
+        parent.resize(n, -1);
         rank.resize(n, 0);
     }
     void unite(int a, int b){
@@ -27,9 +24,10 @@ public:
         }
     }
     int find(int a){
-        if(parent[a]!=a){
+        if(parent[a]!=-1){
             parent[a]=find(parent[a]);
         }
+        if(parent[a]==-1) return a;
         return parent[a];
     }
     
