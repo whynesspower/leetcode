@@ -4,10 +4,12 @@
  */
 // let cnt=0;
 var createCounter = function(n) {
-    
+    var count=n;
     return function() {
         // let cnt;
-        return n++;
+        var currcnt= count;
+        count= count+1;
+        return currcnt;
     };
 };
 
