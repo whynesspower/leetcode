@@ -2,10 +2,10 @@
  * @param {Function} fn
  */
 function memoize(fn) {
-    let cache = {};
+    var cache = {};
     return function(...args) {
-        let key = args.join('#').toString();
-        let it= cache[`${key}`];
+        var key = args.join('#').toString();
+        var it= cache[`${key}`];
         if(it!=undefined){
             return cache[`${key}`];
         }
