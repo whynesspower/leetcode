@@ -1,23 +1,33 @@
+#define ll long long
+
+
 class Solution {
 public:
- long long minCost(vector<int>& A, vector<int>& cost) {
-        long long l = 1, r = 1000000, res = f(A, cost, 1), x;
-        while (l < r) {
-            x = (l + r) / 2;
-            long long y1 = f(A, cost, x), y2 = f(A, cost, x + 1);
-            res = min(y1, y2);
-            if (y1 < y2)
-                r = x;
-            else
-                l = x + 1;
+    long long minCost(vector<int>& nums, vector<int>& cost) {
+        ll l=0, r=1000000;
+        ll ans=solve(nums, cost, 1);
+        
+        while(l<r){
+            ll x=l+(r-l)/2;
+            ll x1=solve(nums, cost, x);
+            ll x2=solve(nums, cost, x+1);
+            ans=min(x1, x2);
+            if(x1<x2){
+                r=x;
+            }
+            else{
+                l=x+1;
+            }
         }
-        return res;
+        return ans;
     }
-
-    long long f(vector<int>& A, vector<int>& cost, int x) {
-        long long res = 0;
-        for (int i = 0; i < A.size(); ++i)
-            res += 1L * abs(A[i] - x) * cost[i];
-        return res;
+    // solve returns the cost to reach the element "X"
+    // as the median point. 
+    ll solve(vector<int>&nums, vector<int>&cost,ll x ){
+        ll ans=0;
+        for(int i=0;i<nums.size();i++){
+            ans+= 1L*abs(nums[i]-x)*cost[i];
+        }
+        return ans;
     }
 };
