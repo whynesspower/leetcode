@@ -1,5 +1,6 @@
 class Solution {
 public:
+    // Did by my own 
     int eraseOverlapIntervals(vector<vector<int>>& v) {
         sort(v.begin(), v.end());
         int i=0,j=0;
@@ -20,7 +21,7 @@ public:
             else{
                 // collition occurs
                 if(y1<=y2){
-                    // prevIndx is smaller range, hence gredily chose this
+                    // prevIndx is smaller range, hence gredily chose this to be removed
                     cntOfRemovals++;
                     currIndx++;
                 }
