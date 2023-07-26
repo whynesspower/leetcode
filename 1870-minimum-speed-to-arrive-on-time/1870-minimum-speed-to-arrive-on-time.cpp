@@ -17,7 +17,7 @@ public:
     
     
     int minSpeedOnTime(vector<int>& dist, double hour) {
-        int l=1, r=1e7+10;
+        int l=0, r=1e7+10;
         bool ans=false;
         while(l<=r){
             int mid=(l+(r-l)/2);
