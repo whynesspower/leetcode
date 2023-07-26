@@ -19,11 +19,11 @@ public:
     int minSpeedOnTime(vector<int>& dist, double hour) {
         int l=0, r=1e7+10;
         bool ans=false;
-        while(l<=r){
+        while(l<r){
             int mid=(l+(r-l)/2);
             cout<<mid<<" ";
             if(solve(mid, dist, hour)){
-                r=mid-1;
+                r=mid;
                 ans=true;
             }
             else{
