@@ -17,6 +17,12 @@ public:
     }
     
     double soupServings(int n){
+        // observation found out that when we take 5000
+        // ans comes out to be 0.99999 something which is so close to 1 
+        // it is that close to one that it falls under the accepted error limit 
+        // which is 10^-5
+        // hence above 5000 answer can be returned just as 1. 
+        
         if(n>=5000) return 1.0;
         dp.resize(5000, vector<double>(5000, 0.0));
         return solve(n, n);
