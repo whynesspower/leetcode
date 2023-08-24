@@ -5,7 +5,8 @@ public:
         string currStr="";
         int whiteSpaces= maxWidth-currCharCnt;
         
-        if(j==words.size()-1){
+        int numBlanks= j-i;
+        if(j==words.size()-1 || numBlanks==0){
             while(i<j){
                 currStr+=words[i];
                 currStr+=' ';
@@ -19,15 +20,7 @@ public:
             }
         }
         else{
-            int numBlanks= j-i;
-            if(numBlanks==0){
-                currStr+=words[i];
-                while(whiteSpaces--){
-                    currStr+=' ';
-                }
-                i++;
-            }
-            else{
+        
 
                 int extraWhiteSpace=whiteSpaces%numBlanks;
                 int regularWhiteSpace=whiteSpaces/numBlanks;
@@ -45,7 +38,7 @@ public:
                     }
                     i++;
                 }
-            }
+            
         }
         // cout<<i<<" "<<j<<" "<<endl;
         currCharCnt=0;
