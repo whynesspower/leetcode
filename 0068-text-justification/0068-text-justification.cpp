@@ -59,13 +59,6 @@ public:
                 string currString=fillString(i, j-1, words, maxWidth, currCharCnt-words[j].length());
                 ans.push_back(currString);
                 currCharCnt=words[j].length();
-                if(currCharCnt>maxWidth){
-                    
-                     tempHit++;
-                    string currString=fillString(i, j, words, maxWidth, currCharCnt);
-                    ans.push_back(currString);
-                    currCharCnt=0;
-                }
             }
             if(j==n-1){
                 string currString=fillString(i, j, words, maxWidth, currCharCnt);
