@@ -1,52 +1,30 @@
 class MyStack {
-    private:
-    std::queue<int> q1;
-    std::queue<int> q2;
-    int topElement;
+private: queue<int>q;
 public:
     MyStack() {
+        
     }
     
     void push(int x) {
-        if(!q1.empty() || (q1.empty()==true and q2.empty()==true ) ){
-            q1.push(x);
-            topElement=x;
-        }
-        else{
-            q2.push(x);
-            topElement=x;
+        q.push(x);
+        for(int i=0;i<q.size()-1;i++){
+            q.push(q.front());
+            q.pop();
         }
     }
     
     int pop() {
-        bool flag=false;
-        while(!q1.empty()){
-            int a = q1.front();
-            q1.pop();
-            if(q1.empty()){
-                return a;
-            }
-            topElement=a;
-            q2.push(a);
-        }
-        while(!q2.empty()){
-            int a= q2.front();
-            q2.pop();
-            if(q2.empty()){
-                return a;
-            }
-            topElement=a;
-            q1.push(a);
-        }
-        return -1;
+        int ans = q.front();
+        q.pop();
+        return ans;
     }
     
     int top() {
-        return topElement;
+        return q.front();
     }
     
     bool empty() {
-        return (q1.size()==0 and q2.size()==0);
+        return q.empty();
     }
 };
 
