@@ -7,12 +7,14 @@ public:
 
         for(int i=n-1;i>=0;i--){
             cntY[i]=cntY[i+1]+( c[i]=='Y'?1:0);
+
         }
 
         cntN[0]=(c[0]=='N'?1:0);
-
+   
         for(int i=1;i<n;i++){
             cntN[i]=cntN[i-1]+(c[i]=='N'?1:0);
+       
         }
         cntN[n]=cntN[n-1];
         int ans=INT_MAX;
@@ -31,7 +33,7 @@ public:
                     ansIndex=i;    
                 }
             }
-           
+            
         }
         return ansIndex;
     }
