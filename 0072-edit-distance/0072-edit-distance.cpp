@@ -1,21 +1,29 @@
 class Solution {
 public:
-int minDistance(string word1, string word2) {
-        int dp[word1.size()+1][word2.size()+1];
-        for(int k=0; k<=word1.size(); k++)
-            dp[k][0] = k;
-        for(int k=0; k<=word2.size(); k++)
-            dp[0][k] = k;
-        for(int i=1; i<=word1.size(); i++){
-            for(int j=1; j<=word2.size(); j++){
-                if(word1[i-1] == word2[j-1])
-                    dp[i][j] = dp[i-1][j-1];
-                else
-                    dp[i][j] = 1 + min({dp[i][j - 1], 
-                                   dp[i - 1][j],  
-                                   dp[i - 1][j - 1]}); 
-            }
-        }
-        return dp[word1.size()][word2.size()];
+    vector<vector<int>>dp;
+    // gives  you the number of operations required
+    // to make substrings (0.. i ) equals to substring(0...j)
+    int solve(int n, int m, string & w1, string &w2, int i, int j){
+        if(i<0) return j+1;
+        if(j<0) return i+1;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(w1[i]==w2[j]){
+            int an= solve(n, m, w1, w2, i-1, j-1);
+            return dp[i][j]=an;
+        } 
+        int cnt=min(solve(n, m, w1, w2, i, j-1)+1,min(solve(n, m, w1, w2, i-1, j)+ 1, solve(n, m, w1, w2, i-1, j-1)+ 1));
+        dp[i][j]=cnt;
+        return cnt;
+    }
+    int minDistance(string word1, string word2) {
+        if(word1.length()==0)
+            return word2.length();
+        if(word2.length()==0)
+            return word1.length();
+        int n=word1.size();
+        int m=word2.size();
+        dp.resize(n, vector<int>(m, -1));
+        solve( n, m, word1, word2, n-1, m-1);
+        return dp[n-1][m-1];
     }
 };
