@@ -15,6 +15,17 @@ public:
         dp[i][j]=cnt;
         return cnt;
     }
+
+//     We can calculate values of distance as follows:
+// distance(a,b) = min(distance(a,b −1)+1,
+// distance(a−1,b)+1,
+// distance(a−1,b −1)+cost(a,b)).
+// Here cost(a,b) = 0 if x[a] = y[b], and otherwise cost(a,b) = 1.
+// The formula
+// considers the following ways to edit the string x:
+// • distance(a,b −1): insert a character at the end of x
+// • distance(a−1,b): remove the last character from x
+// • distance(a−1,b −1): match or modify the last character of x
     int minDistance(string word1, string word2) {
         if(word1.length()==0)
             return word2.length();
